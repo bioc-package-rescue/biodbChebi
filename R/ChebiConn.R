@@ -52,7 +52,7 @@ wsWsdl=function(retfmt=c('plain', 'parsed', 'request')) {
 
     # Build request
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'webservice')
-    request <- self$makeRequest(method='get', url=BiodbUrl$new(url=url,
+    request <- self$makeRequest(method='get', url=biodb::BiodbUrl$new(url=url,
                                                             params='wsdl'))
     if (retfmt == 'request')
         return(request)
@@ -105,7 +105,7 @@ wsGetLiteEntity=function(search=NULL, search.category='ALL', stars='ALL',
                 starsCategory=stars)
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'test/getLiteEntity')
     request <- self$makeRequest(method='get',
-        url=BiodbUrl$new(url=url, params=params), encoding='UTF-8')
+        url=biodb::BiodbUrl$new(url=url, params=params), encoding='UTF-8')
     if (retfmt == 'request')
         return(request)
 
@@ -334,7 +334,7 @@ doGetEntryContentRequest=function(id, concatenate=TRUE) {
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'test',
         'getCompleteEntity')
 
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) biodb::BiodbUrl$new(url=url,
         params=list(chebiId=x))$toString(), FUN.VALUE='')
 
     return(urls)
@@ -344,7 +344,7 @@ doGetEntryPageUrl=function(id) {
     
     url <- c(self$getPropValSlot('urls', 'base.url'), 'searchId.do')
     
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) biodb::BiodbUrl$new(url=url,
         params=list(chebiId=x))$toString(), FUN.VALUE='')
     
     return(urls)
@@ -354,7 +354,7 @@ doGetEntryImageUrl=function(id) {
 
     url <- c(self$getPropValSlot('urls', 'base.url'), 'displayImage.do')
     
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) biodb::BiodbUrl$new(url=url,
         params=list(defaultImage='true', imageIndex=0, chebiId=x,
         dimensions=400))$toString(), FUN.VALUE='')
     
