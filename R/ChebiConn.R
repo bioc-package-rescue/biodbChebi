@@ -4,6 +4,7 @@
 #' web services.
 #'
 #' @examples
+#' \dontrun{
 #' # Create an instance with default settings:
 #' mybiodb <- biodb::newInst()
 #'
@@ -18,6 +19,7 @@
 #'
 #' # Terminate instance.
 #' mybiodb$terminate()
+#' }
 #'
 #' @importFrom R6 R6Class
 #' @export
