@@ -3,6 +3,9 @@
 \name{ChebiEntry}
 \alias{ChebiEntry}
 \title{ChEBI entry class.}
+\value{
+An R6 object of class ChebiEntry.
+}
 \description{
 This is the entry class for ChEBI database.
 }

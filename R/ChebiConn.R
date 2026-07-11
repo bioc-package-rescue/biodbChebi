@@ -3,6 +3,8 @@
 #' This is the connector class for connecting to the ChEBI database through its
 #' web services.
 #'
+#' @return An R6 object of class ChebiConn.
+#'
 #' @examples
 #' # Create an instance with default settings:
 #' mybiodb <- biodb::newInst()

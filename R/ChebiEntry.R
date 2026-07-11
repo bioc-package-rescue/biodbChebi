@@ -2,6 +2,8 @@
 #'
 #' This is the entry class for ChEBI database.
 #'
+#' @return An R6 object of class ChebiEntry.
+#'
 #' @examples
 #' # Create an instance with default settings:
 #' mybiodb <- biodb::newInst()

@@ -3,6 +3,9 @@
 \name{ChebiConn}
 \alias{ChebiConn}
 \title{ChEBI connector class.}
+\value{
+An R6 object of class ChebiConn.
+}
 \description{
 This is the connector class for connecting to the ChEBI database through its
 web services.
