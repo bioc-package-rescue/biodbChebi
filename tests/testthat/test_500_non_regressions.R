@@ -15,7 +15,7 @@ test.chebi.encoding.issue.in.xml <- function(conn) {
 # Check if ChEBI SOAP service is available
 if (!tryCatch({
     url <- "https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl"
-    res <- RCurl::getURL(url)
+    res <- RCurl::getURL(url, .opts = list(timeout = 5, connecttimeout = 5))
     grepl("^\\s*<\\?xml|<wsdl:definitions", res)
 }, error = function(e) {
     FALSE
