@@ -3,18 +3,32 @@
 #' This is the connector class for connecting to the ChEBI database through its
 #' web services.
 #'
+#' @return An R6 object of class ChebiConn.
+#'
 #' @examples
 #' # Create an instance with default settings:
 #' mybiodb <- biodb::newInst()
 #'
-#' # Create a connector
-#' conn <- mybiodb$getFactory()$createConn('chebi')
+#' # Check if ChEBI SOAP service is available
+#' if (tryCatch({
+#'     url <- "https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl"
+#'     res <- RCurl::getURL(url, .opts = list(timeout = 5, connecttimeout = 5))
+#'     grepl("^\\s*<\\?xml|<wsdl:definitions", res)
+#' }, error = function(e) FALSE)) {
+#'     # Load package definitions:
+#'     if ( ! mybiodb$getDbsInfo()$isDefined('chebi')) {
+#'         mybiodb$loadDefinitions(system.file("definitions.yml", package='biodbChebi'))
+#'     }
 #'
-#' # Get an entry
-#' e <- conn$getEntry('15440')
+#'     # Create a connector
+#'     conn <- mybiodb$getFactory()$createConn('chebi')
 #'
-#' # Convert an InChI KEY to a ChEBI identifier
-#' conn$convInchiToChebi('YYGNTYWPHWGJRM-AAJYLUCBSA-N')
+#'     # Get an entry
+#'     e <- conn$getEntry('15440')
+#'
+#'     # Convert an InChI KEY to a ChEBI identifier
+#'     conn$convInchiToChebi('YYGNTYWPHWGJRM-AAJYLUCBSA-N')
+#' }
 #'
 #' # Terminate instance.
 #' mybiodb$terminate()
@@ -52,7 +66,7 @@ wsWsdl=function(retfmt=c('plain', 'parsed', 'request')) {
 
     # Build request
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'webservice')
-    request <- self$makeRequest(method='get', url=BiodbUrl$new(url=url,
+    request <- self$makeRequest(method='get', url=sched::URL$new(url=url,
                                                             params='wsdl'))
     if (retfmt == 'request')
         return(request)
@@ -105,7 +119,7 @@ wsGetLiteEntity=function(search=NULL, search.category='ALL', stars='ALL',
                 starsCategory=stars)
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'test/getLiteEntity')
     request <- self$makeRequest(method='get',
-        url=BiodbUrl$new(url=url, params=params), encoding='UTF-8')
+        url=sched::URL$new(url=url, params=params), encoding='UTF-8')
     if (retfmt == 'request')
         return(request)
 
@@ -334,7 +348,7 @@ doGetEntryContentRequest=function(id, concatenate=TRUE) {
     url <- c(self$getPropValSlot('urls', 'ws.url'), 'test',
         'getCompleteEntity')
 
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) sched::URL$new(url=url,
         params=list(chebiId=x))$toString(), FUN.VALUE='')
 
     return(urls)
@@ -344,7 +358,7 @@ doGetEntryPageUrl=function(id) {
     
     url <- c(self$getPropValSlot('urls', 'base.url'), 'searchId.do')
     
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) sched::URL$new(url=url,
         params=list(chebiId=x))$toString(), FUN.VALUE='')
     
     return(urls)
@@ -354,7 +368,7 @@ doGetEntryImageUrl=function(id) {
 
     url <- c(self$getPropValSlot('urls', 'base.url'), 'displayImage.do')
     
-    urls <- vapply(id, function(x) BiodbUrl$new(url=url,
+    urls <- vapply(id, function(x) sched::URL$new(url=url,
         params=list(defaultImage='true', imageIndex=0, chebiId=x,
         dimensions=400))$toString(), FUN.VALUE='')
     

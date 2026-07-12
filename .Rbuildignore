@@ -1,9 +1,6 @@
 ^.*\.dockerfile$
 ^.*\.log$
 ^.*rds$
-^.*tests/dockerfiles$
-^.*tests/testthat/_snaps$
-^.*tests/testthat/output$
 ^.BBSoptions$
 ^\.travis\.yml$
 ^biodb_ext\.yml$
@@ -26,7 +23,3 @@
 ^Meta$
 ^R_front$
 ^scripts$
-^tests/dockerfiles$
-^tests/testthat/_snaps$
-^tests/testthat/output$
-^travis-tests$
